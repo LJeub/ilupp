@@ -12,14 +12,6 @@ def readme():
             'README.md')) as fp:
         return fp.read()
 
-def get_version(fname):
-    with open(fname) as f:
-        for line in f:
-            if line.startswith("__version__ = '"):
-                return line.split("'")[1]
-    raise RuntimeError('could not parse version string')
-
-__version__ = get_version('ilupp/__init__.py')
 
 class get_pybind_include(object):
     """Helper class to determine the pybind11 include path
@@ -124,7 +116,7 @@ class BuildExt(build_ext):
 
 setup(
     name = 'ilupp',
-    version = __version__,
+    use_scm_version=True,
     author = 'Clemens Hofreither',
     author_email = 'chofreither@gmail.com',
     url = 'https://github.com/c-f-h/ilupp',
@@ -141,7 +133,7 @@ setup(
     ext_modules = ext_modules,
     packages = ['ilupp'],
     install_requires = [ 'numpy>=1.11', 'scipy' ],
-    setup_requires = ['pybind11>=2.4'],
+    setup_requires = ['pybind11>=2.4', 'setuptools-scm'],
     cmdclass = {'build_ext': BuildExt},
     zip_safe = False,
 

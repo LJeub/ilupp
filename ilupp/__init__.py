@@ -18,8 +18,14 @@
 
 ILU algorithms for C++ and Python
 """
+from pkg_resources import get_distribution, DistributionNotFound
 
-__version__ = '1.0.2'
+try:
+    __version__ = get_distribution(__name__).version
+except DistributionNotFound:
+    # package is not installed
+    __version__ = ''
+
 
 import numpy as np
 import scipy.sparse
